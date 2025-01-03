@@ -6,35 +6,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    {{-- remix icon cnd --}}
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+
+    <title>{{ config('app.name', 'V-Card') }}</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
+
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
+    {{-- custom css link --}}
+    <link rel="stylesheet" href="{{ asset('assets/backend/css/style.css') }}">
+    @stack('styles')
   </head>
 
-  <body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100">
-      @include('layouts.navigation')
+  <body class="font-Montserrat">
+    <!-- start: Sidebar -->
+    @include('layouts.partials.sidebar')
+    <!-- end: Sidebar -->
 
-      <!-- Page Heading -->
-      @isset($header)
-        <header class="bg-white shadow">
-          <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-            {{ $header }}
-          </div>
-        </header>
-      @endisset
+    <!-- start: Main -->
+    <main class="main min-h-screen w-full bg-gray-50 transition-all md:ml-64 md:w-[calc(100%-256px)]">
+      {{-- start navber --}}
+      @include('layouts.partials.navber')
+      {{-- end navber --}}
+      @yield('content')
+    </main>
 
-      <!-- Page Content -->
-      <main>
-        {{ $slot }}
-      </main>
-    </div>
+    <!-- end: Main -->
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    {{-- custom script  --}}
+    <script src="{{ asset('assets/backend/js/app.js') }}"></script>
+    @stack('scripts')
   </body>
 
 </html>
